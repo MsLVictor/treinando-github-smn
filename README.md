@@ -13,3 +13,5 @@ Projeto teste
 2 - criar style.css
 3 - criar script.js
 aceito sujestõess
+
+Estamos piorando o comentário aqui, para dar erro.
