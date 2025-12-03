@@ -1,0 +1,14 @@
+.containe{
+    align-items:  center;
+    padding: 20px;
+}
+
+.dados{
+
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20%;
+    background: gray;
+    
+}
+
