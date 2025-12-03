@@ -9,6 +9,12 @@
     border-radius: 20px;
     padding: 20%;
     background: gray;
+    width: 100vh;
+    height: 100vh;
     
 }
 
+.btn-cinza{
+    border-radius: 10px;
+    margin-top: 5px;
+}
