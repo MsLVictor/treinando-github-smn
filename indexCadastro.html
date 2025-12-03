@@ -1,12 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Gitflow SMN - O Processo</title>
+    
+    <!-- Reveal.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css">
+    
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai.min.css">
+
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
+        .reveal pre code { padding: 20px; border-radius: 8px; font-size: 1.1em; line-height: 1.3em;}
+        .highlight { color: #50fa7b; font-weight: bold; }
+        .warning { color: #ffb86c; }
+        .danger { color: #ff5555; font-weight: bold; }
+        .cmd-box { background: #282a36; padding: 5px 10px; border-radius: 5px; font-family: monospace; display: inline-block; color: #f8f8f2; border: 1px solid #6272a4; font-size: 0.8em; }
+        
+        /* Diagramas CSS */
+        .diagram-container { display: flex; justify-content: center; align-items: center; margin-top: 30px; gap: 20px; flex-wrap: wrap; }
+        .box { padding: 20px; border-radius: 10px; width: 200px; text-align: center; border: 3px solid; position: relative; }
+        
+        .box-main { border-color: #50fa7b; background: rgba(80, 250, 123, 0.1); color: #50fa7b; }
+        .box-staging { border-color: #ffb86c; background: rgba(255, 184, 108, 0.1); color: #ffb86c; }
+        .box-feature { border-color: #8be9fd; background: rgba(139, 233, 253, 0.1); color: #8be9fd; }
+        
+        .arrow { font-size: 1.5em; color: #6272a4; }
+
+        /* Tabela Comparativa */
+        .compare-table { font-size: 0.6em; border-collapse: collapse; width: 100%; }
+        .compare-table th { border-bottom: 2px solid #6272a4; padding: 10px; color: #8be9fd; }
+        .compare-table td { border-bottom: 1px solid #44475a; padding: 10px; }
+        
+        .rule-box { border: 4px solid #ff5555; background: rgba(255, 85, 85, 0.1); padding: 30px; border-radius: 15px; margin-top: 30px; }
+    </style>
 </head>
 <body>
-    <h1> RESOLVENDO B.O </h1>
-    
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- CAPA -->
+            <section>
+                <h1 style="color: #8be9fd;">Gitflow SMN</h1>
+                <h3>Agilidade com Segurança</h3>
+                <p><small>Manual do Processo de Desenvolvimento</small></p>
+            </section>
+
+            <!-- OBJETIVO -->
+            <section>
+                <h2>O Objetivo</h2>
+                <p>Por que usamos um fluxo customizado?</p>
+                <ul>
+                    <li class="fragment">Entregar features <span class="highlight">rápido</span>.</li>
+                    <li class="fragment">Garantir que a produção esteja sempre <span class="highlight">estável</span>.</li>
+                    <li class="fragment">Usar o <strong>Staging</strong> como filtro de qualidade.</li>
+                </ul>
+            </section>
+
+            <!-- AS 3 BRANCHES -->
+            <section>
+                <section>
+                    <h2>1. Os Três Pilares</h2>
+                    <div class="diagram-container">
+                        <div class="box box-main">
+                            <strong>Main</strong><br>
+                            <small>Produção</small>
+                        </div>
+                        <div class="box box-staging">
+                            <strong>Staging</strong><br>
+                            <small>Laboratório</small>
+                        </div>
+                        <div class="box box-feature">
+                            <strong>Feature/*</strong><br>
+                            <small>Desenvolvimento</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Detalhes das Branches</h3>
+                    <ul style="font-size: 0.8em;">
+                        <li class="fragment">
+                            <strong style="color: #50fa7b;">Main (🔒):</strong> 
+                            Onde vive o código de produção. Só aceita código via Pull Request.
+                        </li>
+                        <li class="fragment" style="margin-top: 20px;">
+                            <strong style="color: #ffb86c;">Staging (🧪):</strong> 
+                            Ambiente volátil. Juntamos tudo aqui para testes. Pode ser "resetada" a qualquer momento.
+                        </li>
+                        <li class="fragment" style="margin-top: 20px;">
+                            <strong style="color: #8be9fd;">Feature (⚡):</strong> 
+                            Temporária. Onde você trabalha no dia a dia.
+                        </li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- O FLUXO (CICLO DE VIDA) -->
+            <section>
+                <section>
+                    <h2>2. O Ciclo de Vida</h2>
+                    <p>Como promover seu código.</p>
+                    <div class="diagram-container" style="font-size: 0.8em;">
+                        <span class="box-feature" style="padding: 10px;">Dev</span>
+                        <span class="arrow">→</span>
+                        <span class="box-staging" style="padding: 10px;">Teste (Staging)</span>
+                        <span class="arrow">→</span>
+                        <span class="box-main" style="padding: 10px;">Prod (Main)</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Passo 1: Development</h3>
+                    <p>Tudo começa na <span class="highlight">Main</span>.</p>
+                    <pre><code class="bash" data-trim>
+git checkout main
+git pull
+git checkout -b feature/minha-tarefa
+
+# ... codifica ...
+git push origin feature/minha-tarefa
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Passo 2: Staging (O Teste)</h3>
+                    <p>Valide antes de entregar.</p>
+                    <ul>
+                        <li>Faça merge da sua feature em <code>staging</code>.</li>
+                        <li>O deploy é automático no ambiente de teste.</li>
+                        <li>QA e PO validam.</li>
+                    </ul>
+                    <div class="fragment cmd-box" style="margin-top: 20px;">
+                        Deu bug? Arrume na Feature e mande pro Staging de novo.
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Passo 3: Produção</h3>
+                    <p>Só após validação no Staging!</p>
+                    <ol>
+                        <li>Abra um <strong>Pull Request</strong> da <code style="color:#8be9fd">feature</code> para a <code style="color:#50fa7b">main</code>.</li>
+                        <li>Code Review do time.</li>
+                        <li>Merge & Deploy.</li>
+                    </ol>
+                </section>
+            </section>
+
+            <!-- A REGRA DE OURO -->
+            <section>
+                <div class="rule-box">
+                    <h2>⚠️ REGRA DE OURO</h2>
+                    <p class="danger" style="font-size: 1.2em;">
+                        NUNCA faça merge de <u>Staging</u> para <u>Main</u>.
+                    </p>
+                    <p style="font-size: 0.7em;">
+                        A Staging contém código de teste, sujeira e experimentos falhos. 
+                        A Main deve receber código limpo vindo direto da Feature.
+                    </p>
+                </div>
+            </section>
+
+            <!-- COMPARATIVO -->
+            <section>
+                <h2>Tradicional vs SMN</h2>
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Gitflow Tradicional</th>
+                            <th>Gitflow SMN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Integração</td>
+                            <td>Branch 'Develop' eterna</td>
+                            <td>Direto da Main</td>
+                        </tr>
+                        <tr>
+                            <td>Deploy Prod</td>
+                            <td>Complexo (Branch Release)</td>
+                            <td>Simples (Merge na Main)</td>
+                        </tr>
+                        <tr>
+                            <td>Staging</td>
+                            <td>Não é padrão</td>
+                            <td><strong>Essencial (Filtro)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Agilidade</td>
+                            <td>Média/Baixa</td>
+                            <td><strong>Alta</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- RESUMO FINAL -->
+            <section>
+                <h2>Resumo Visual</h2>
+                <div class="diagram-container">
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div class="box box-feature">Sua Feature</div>
+                    </div>
+                    
+                    <div style="display:flex; flex-direction:column; justify-content:space-between; height: 150px;">
+                        <span class="arrow">↗ (Valida)</span>
+                        <span class="arrow">↘ (Entrega)</span>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        <div class="box box-staging">Staging</div>
+                        <div class="box box-main">Main</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h1>Obrigado!</h1>
+                <p>Equipe de comissão da SMN</p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: false, 
+            history: false,
+            slideNumber: true,
+            plugins: [ RevealHighlight ]
+        });
+    </script>
 </body>
 </html>
