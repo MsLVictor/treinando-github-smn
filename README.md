@@ -13,9 +13,13 @@ Projeto teste
 1 - criar index.html
 2 - criar style.css
 3 - criar script.js
+<<<<<<< HEAD
 
 Aceito sugestões:
 
 Se não der windows + L já era...
 
 
+=======
+aceito sugestoes -- corrijido marconi
+>>>>>>> 3591c87dc37b3d282a5c44ffc6ad2c5b5ea4707b
