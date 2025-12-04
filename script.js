@@ -1,2 +1,3 @@
 email = addEventListener
-hhh
+
+console.log("olá mundo!")
