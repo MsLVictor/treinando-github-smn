@@ -1,14 +1,60 @@
-.containe{
-    align-items:  center;
-    padding: 20px;
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.container{
+    
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;    /* Centraliza verticalmente */
+    height: 100vh;          /* Para que o corpo ocupe toda a altura da tela */
+    background-color: rgb(118, 125, 226);
 }
 
 .dados{
 
-    border: 2px solid black;
+    border: 2px solid rgb(248, 248, 248);
     border-radius: 20px;
-    padding: 20%;
-    background: gray;
+    padding: 40px;
+    background: rgb(245, 195, 129);
+    width: 350px;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;
+    display: flex;    
+    flex-direction: column;
+}
+
+.dados form >div{
+    width: 100%;
+}
+
+.input-1{
+    width: 100%;
+    border-radius: 5px;
+    border: 1px;
+}
+
+label{
+    color: white;
     
 }
 
+.btn-cinza{
+    border-radius: 5px;
+    border: 1px solid rgb(238, 238, 238);
+    margin-top: 10px;
+    background: rgb(240, 214, 180);
+    color: rgb(5, 5, 5);
+    padding: 8px;
+    cursor: pointer;
+
+}
+
+.btn-cinza:hover{
+    background: rgb(231, 224, 215);
+    transform: scale(1.05);
+}
+
+.input-2{
+    margin-top: 10px;
+}
